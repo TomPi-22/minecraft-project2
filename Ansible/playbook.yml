@@ -72,6 +72,7 @@
     - name: Install Docker module for Python
       ansible.builtin.pip:
         name: docker
+        extra_args: --break-system-packages
 
     - name: Pull Docker image from Docker directory
       community.docker.docker_image:

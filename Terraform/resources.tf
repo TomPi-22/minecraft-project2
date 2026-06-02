@@ -32,6 +32,7 @@ resource "aws_ssm_parameter" "minecraft_private_key" {
   name  = "/minecraft/private-key"
   type  = "SecureString"
   value = tls_private_key.minecraft_server_key.private_key_pem
+  overwrite = true
 }
 
 # Create keypair on AWS using public key

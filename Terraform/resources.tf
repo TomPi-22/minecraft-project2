@@ -29,9 +29,9 @@ resource "tls_private_key" "minecraft_server_key" {
 
 # Keeps private key in the SSM parameters for easy access
 resource "aws_ssm_parameter" "minecraft_private_key" {
-  name  = "/minecraft/private-key"
-  type  = "SecureString"
-  value = tls_private_key.minecraft_server_key.private_key_pem
+  name      = "/minecraft/private-key"
+  type      = "SecureString"
+  value     = tls_private_key.minecraft_server_key.private_key_pem
   overwrite = true
 }
 

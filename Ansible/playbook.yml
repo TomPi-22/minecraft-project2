@@ -5,16 +5,16 @@
 - name: Configure Minecraft server
   hosts: minecraft
   become: true
-
   tasks:
+
     - name: Install aptitude
-      apt:
+      ansible.builtin.apt:
         name: aptitude
         state: latest
         update_cache: true
 
     - name: Install required system packages
-      apt:
+      ansible.builtin.apt:
         pkg:
           - ca-certificates
           - gnupg
@@ -23,31 +23,31 @@
         update_cache: true
 
     - name: Create keyrings directory
-      file:
+      ansible.builtin.file:
         path: /etc/apt/keyrings
         state: directory
         mode: '0755'
 
     - name: Download Docker GPG key
-      get_url:
+      ansible.builtin.get_url:
         url: https://download.docker.com/linux/ubuntu/gpg
         dest: /etc/apt/keyrings/docker.asc
         mode: '0644'
         force: true
 
     - name: De-armor Docker GPG key for APT
-      command: gpg --dearmor --yes --output /etc/apt/keyrings/docker.gpg /etc/apt/keyrings/docker.asc
+      ansible.builtin.command: gpg --dearmor --yes --output /etc/apt/keyrings/docker.gpg /etc/apt/keyrings/docker.asc
       args:
         creates: /etc/apt/keyrings/docker.gpg
 
     - name: Add Docker repository
-      apt_repository:
+      ansible.builtin.apt_repository:
         repo: "deb [signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
         state: present
         filename: docker
 
     - name: Install Docker
-      apt:
+      ansible.builtin.apt:
         pkg:
           - docker-ce
           - docker-ce-cli
@@ -58,19 +58,19 @@
         update_cache: true
 
     - name: Start and enable Docker
-      systemd:
+      ansible.builtin.systemd_service:
         name: docker
         state: started
         enabled: true
 
     - name: Add ubuntu user to docker group
-      user:
+      ansible.builtin.user:
         name: ubuntu
         groups: docker
-        append: yes
+        append: true
 
     - name: Install Docker module for Python
-      pip:
+      ansible.builtin.pip:
         name: docker
 
     - name: Pull Docker image from Docker directory
@@ -79,25 +79,25 @@
         source: pull
 
     - name: Create Minecraft directory
-      file:
+      ansible.builtin.file:
         path: /minecraft
         state: directory
         mode: '0755'
 
     - name: Copy compose.yaml to the server
-      copy:
+      ansible.builtin.copy:
         src: ../docker/compose.yaml
         dest: /minecraft/compose.yaml
         mode: '0644'
 
     - name: Copy systemd file
-      template:
+      ansible.builtin.template:
         src: minecraft.service.j2
         dest: /etc/systemd/system/minecraft.service
         mode: '0644'
 
     - name: Launch Minecraft service
-      systemd:
+      ansible.builtin.systemd_service:
         name: minecraft
         state: started
         enabled: true

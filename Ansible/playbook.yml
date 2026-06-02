@@ -87,7 +87,7 @@
 
     - name: Copy compose.yaml to the server
       ansible.builtin.copy:
-        src: ../docker/compose.yaml
+        src: ../Docker/compose.yaml
         dest: /minecraft/compose.yaml
         mode: '0644'
 

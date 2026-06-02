@@ -16,7 +16,7 @@ variable "region" {
 variable "ami_id" {
   description = "Ubuntu 24.04 (us-west-2)"
   type        = string
-  default     = "ami-05cf1e9f73fbad2e2"
+  default     = "ami-06c6960215cdac78d"
 }
 
 variable "instance_type" {

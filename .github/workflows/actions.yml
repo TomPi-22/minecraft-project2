@@ -48,6 +48,11 @@ jobs:
         working-directory: Terraform
         run: terraform validate
 
+      - name: Terraform Destroy
+        working-directory: Terraform
+        run: terraform destroy -auto-approve -var="key_pair_name=minecraft_server"
+        continue-on-error: true
+
       - name: Terraform Apply
         working-directory: Terraform
         run: terraform apply -auto-approve -var="key_pair_name=minecraft_server"

@@ -92,7 +92,7 @@
 
     - name: Copy systemd file
       ansible.builtin.template:
-        src: minecraft.service.j2
+        src: minecraft-service.txt
         dest: /etc/systemd/system/minecraft.service
         mode: '0644'
 

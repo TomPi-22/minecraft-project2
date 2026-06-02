@@ -1,0 +1,17 @@
+# Systemd service file
+# Helps the docker container be managed like a system service
+
+[Unit]
+Description=Minecraft Server
+After=docker.service
+Requires=docker.service
+
+[Service]
+WorkingDirectory=/minecraft
+ExecStart=/usr/bin/docker compose up
+ExecStop=/usr/bin/docker compose down
+TimeoutStopSec=30
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

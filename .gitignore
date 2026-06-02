@@ -1,0 +1,22 @@
+# Ignore file to keep sensitive information hidden from the public repo
+
+# Terraform
+Terraform/.terraform/
+Terraform/.terraform.lock.hcl
+Terraform/terraform.tfstate
+Terraform/terraform.tfstate.backup
+Terraform/*.tfvars
+
+# Ansible
+Ansible/*.retry
+
+# SSH keys
+*.pem
+*.key
+
+# Environment
+.env
+
+# OS
+.DS_Store
+Thumbs.db
